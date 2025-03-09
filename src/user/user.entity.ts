@@ -1,13 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+// import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
-@Entity()
-export class Users {
-  @PrimaryGeneratedColumn()
-  id: number;
+// @Entity()
+// export class Users {
+//   @PrimaryGeneratedColumn()
+//   id: number;
 
-  @Column()
-  username: string;
+//   @Column()
+//   username: string;
 
-  @Column()
-  password: string;
-}
+//   @Column()
+//   password: string;
+// }
