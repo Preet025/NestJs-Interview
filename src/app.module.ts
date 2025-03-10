@@ -6,12 +6,14 @@ import { AuthModule } from './auth/auth.module';
 // import { Users } from './user/user.entity';
 import { PrismaModule } from './prisma/prisma.module';
 import { DocumentsModule } from './documents/documents.module';
+import { IngestionModule } from './ingestion/ingestion.module';
 
 @Module({
   imports: [
     AuthModule,
     PrismaModule,
     DocumentsModule,
+    IngestionModule,
     // TypeOrmModule.forRoot({
     //   type: 'postgres',
     //   host: 'localhost',
