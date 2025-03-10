@@ -33,6 +33,7 @@ export class DocumentsService {
     return document;
   }
 
+  // async findAll(user: any) {
   async findAll(user: User) {
     // ADMIN can see all documents, others can only see their own
     if (user.role === 'ADMIN') {
@@ -67,6 +68,7 @@ export class DocumentsService {
     });
   }
 
+  // async findOne(id: number, user: any) {
   async findOne(id: number, user: User) {
     const document = await this.prisma.document.findUnique({
       where: { id },
@@ -94,6 +96,7 @@ export class DocumentsService {
     return document;
   }
 
+  // async update(id: number, file: Express.Multer.File, user: User) {
   async update(id: number, file: Express.Multer.File, user: User) {
     // Find the existing document
     const existingDoc = await this.prisma.document.findUnique({
@@ -134,6 +137,7 @@ export class DocumentsService {
     return existingDoc;
   }
 
+  // async remove(id: number, user: any) {
   async remove(id: number, user: User) {
     // Find the document to ensure it exists
     const document = await this.prisma.document.findUnique({

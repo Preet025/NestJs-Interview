@@ -27,6 +27,9 @@ export class DocumentsController {
   @UseGuards(RolesGuard)
   @UseInterceptors(FileInterceptor('file'))
   create(@UploadedFile() file: Express.Multer.File, @Req() req: Request) {
+    // if (file || file.originalname) {
+    //   throw new BadRequestException('Valid file is required');
+    // }
     if (!file || !file.originalname) {
       throw new BadRequestException('Valid file is required');
     }
@@ -34,6 +37,9 @@ export class DocumentsController {
   }
 
   @Get()
+  // findAll(@Req() req: Req) {
+  //   return this.documentsService.findAll(req.user);
+  // }
   findAll(@Req() req: Request) {
     return this.documentsService.findAll(req.user);
   }
