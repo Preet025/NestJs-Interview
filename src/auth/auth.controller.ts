@@ -1,6 +1,6 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { AuthDto } from './dto';
+import { AuthDto, VerifyDto } from './dto';
 import { LoginDto } from './dto/login.dto';
 // import {ParseIntPipe} from '@nestjs/common';
 
@@ -32,4 +32,9 @@ export class AuthController {
   //   });
   //   return this.authService.register();
   // }
+
+  @Get('verify')
+  verify(@Query() dto: VerifyDto) {
+    return this.authService.verify(dto);
+  }
 }

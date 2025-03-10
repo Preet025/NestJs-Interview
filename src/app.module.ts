@@ -5,11 +5,13 @@ import { AuthModule } from './auth/auth.module';
 // import { TypeOrmModule } from '@nestjs/typeorm';
 // import { Users } from './user/user.entity';
 import { PrismaModule } from './prisma/prisma.module';
+import { DocumentsModule } from './documents/documents.module';
 
 @Module({
   imports: [
     AuthModule,
     PrismaModule,
+    DocumentsModule,
     // TypeOrmModule.forRoot({
     //   type: 'postgres',
     //   host: 'localhost',
