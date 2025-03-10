@@ -20,6 +20,7 @@ model User {
   email    String @unique
   role       ROLE
   documents Document[]
+  ingestions Ingestion[]
 }
 
 enum ROLE {
@@ -38,4 +39,29 @@ model Document {
   updatedAt DateTime @updatedAt
   user      User     @relation(fields: [userId], references: [id])
   userId    Int
+}
+
+
+
+model Ingestion {
+  id          Int       @id @default(autoincrement())
+  status      STATUS
+  source      String
+  destination String
+  retries     Int       @default(0)
+  maxRetries  Int       @default(3)
+  error       String?
+  metadata    Json?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  completedAt DateTime?
+  user        User      @relation(fields: [userId], references: [id])
+  userId      Int
+}
+
+enum STATUS {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  FAILED
 }
