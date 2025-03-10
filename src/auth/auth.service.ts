@@ -2,21 +2,30 @@ import { PrismaService } from '../prisma/prisma.service';
 import { AuthDto } from './dto/auth.dto';
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import { LoginDto } from './dto/login.dto';
+import * as argon2 from 'argon2';
 
 @Injectable()
 export class AuthService {
   constructor(private prisma: PrismaService) {}
-  // instead of declaring the service is where and how
-  // simply mention it in auth controller
-  // const service = new AuthService()
-  // avoid doing it that who manages it and who create it we use dependency injection like in controller
 
-  login() {
-    return {
-      msg: 'Hello this is signin',
-    };
+  async login(dto: LoginDto) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        email: dto.email,
+      },
+    });
+
+    if (!user) throw new ForbiddenException('User not found');
+
+    const pwMatches = await argon2.verify(user.password, dto.password);
+
+    if (!pwMatches) {
+      throw new ForbiddenException('Invalid password');
+    }
+
+    return user;
   }
-  // hello
 
   async register(dto: AuthDto) {
     try {
@@ -25,6 +34,7 @@ export class AuthService {
           username: dto.username,
           password: dto.password,
           email: dto.email,
+          role: dto.role,
         },
       });
       return user;
