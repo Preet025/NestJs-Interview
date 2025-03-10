@@ -1,6 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto';
+import { LoginDto } from './dto/login.dto';
 // import {ParseIntPipe} from '@nestjs/common';
 
 @Controller('auth')
@@ -12,12 +13,12 @@ export class AuthController {
   // so how we do it by using dependency injection
   constructor(private authService: AuthService) {}
   @Post('login')
-  signin() {
-    return this.authService.login();
+  login(@Body() dto: LoginDto) {
+    return this.authService.login(dto);
   }
 
   @Post('register')
-  signup(@Body() dto: AuthDto) {
+  register(@Body() dto: AuthDto) {
     return this.authService.register(dto);
   }
   // @Post('register')
