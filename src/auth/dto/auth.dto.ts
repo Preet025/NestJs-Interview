@@ -1,3 +1,4 @@
+import { ROLE } from '@prisma/client';
 import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
 
 export class AuthDto {
@@ -13,6 +14,6 @@ export class AuthDto {
   @IsNotEmpty()
   email: string;
 
-  @IsEnum(['ADMIN', 'VIEWER', 'EDITOR'])
-  role: 'ADMIN' | 'VIEWER' | 'EDITOR';
+  @IsEnum(ROLE)
+  role: ROLE;
 }
