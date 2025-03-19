@@ -2,38 +2,33 @@ import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthDto, VerifyDto } from './dto';
 import { LoginDto } from './dto/login.dto';
-// import {ParseIntPipe} from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiResponse, ApiQuery } from '@nestjs/swagger';
 
+@ApiTags('Authentication')
 @Controller('auth')
 export class AuthController {
-  // controller says that jst give me instance of the service in nest js
-  /* constructor (){
-        const service = new AuthService();
-    }*/
-  // so how we do it by using dependency injection
   constructor(private authService: AuthService) {}
+
   @Post('login')
+  @ApiOperation({ summary: 'User login', description: 'Endpoint to login an existing user' })
+  @ApiResponse({ status: 201, description: 'Successfully logged in' })
+  @ApiResponse({ status: 401, description: 'Invalid credentials' })
   login(@Body() dto: LoginDto) {
     return this.authService.login(dto);
   }
 
   @Post('register')
+  @ApiOperation({ summary: 'User registration', description: 'Endpoint to register a new user' })
+  @ApiResponse({ status: 201, description: 'User registered successfully' })
+  @ApiResponse({ status: 400, description: 'Bad request or user already exists' })
   register(@Body() dto: AuthDto) {
     return this.authService.register(dto);
   }
-  // @Post('register')
-  // signup(@Body('username') username: string, @Body('password', ParseIntPipe) password: string) {
-  //   //       ParseIntPipe = it will put validation on the body if any column is number then it will convert that in number, because in the url /signup/user/1, ----> this id 1 will be considered as the string so it will convert it into number
-  //   console.log({
-  //     username,
-  //     typeOfUsername: typeof username,
-  //     password,
-  //     typeOfPassword: typeof password,
-  //   });
-  //   return this.authService.register();
-  // }
 
   @Get('verify')
+  @ApiOperation({ summary: 'Verify account', description: 'Endpoint to verify user using query parameters' })
+  @ApiResponse({ status: 200, description: 'Verification successful' })
+  @ApiQuery({ name: 'token', required: true, description: 'Verification token sent to user email' })
   verify(@Query() dto: VerifyDto) {
     return this.authService.verify(dto);
   }
